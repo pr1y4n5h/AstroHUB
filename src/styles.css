@@ -1,0 +1,89 @@
+/* @import "https://ez-ui-library.netlify.app/styles.css"; */
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+}
+
+.top-portion {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-card {
+  padding: 1rem;
+  margin: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid black;
+  margin: 1rem;
+  width: 200px;
+  box-shadow: black 5px 5px 10px;
+}
+
+.product-content {
+  padding: 0.25rem;
+}
+
+.addToCart {
+  background-color: #ff4e00;
+  background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+  border-radius: 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bolder;
+  padding: 1rem;
+  border: none;
+}
+
+.thumbnail {
+  padding: 0.5rem 0.5rem;
+  position: relative;
+}
+
+.product-card .x {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.top-btns {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-top {
+  padding: 1rem;
+  border: none;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.navigation {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 18vh;
+}
+
+.navigation-content {
+  display: inline;
+  padding: 14px 16px;
+  border-radius: 1rem 1rem;
+}
+
+.navigation-content:hover {
+  background-color: #ff4e00;
+  background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+  cursor: pointer;
+  color: black;
+  font-weight: bolder;
+}
+
+.navigation-content:active {
+  transform: translateY(4px);
+}
