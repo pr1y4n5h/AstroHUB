@@ -15,7 +15,7 @@ export default function setupMockServer() {
 
     routes() {
       this.namespace = "api";
-      // this.timing = 2000;
+      // this.timing = 5000;
       this.resource("products");
     },
 
@@ -23,6 +23,7 @@ export default function setupMockServer() {
       [...Array(50)].forEach((_) => {
         server.create("product", {
           id: faker.random.uuid(),
+          qty: 1,
           name: faker.commerce.productName(),
           image: faker.random.image(),
           price: faker.commerce.price(),
@@ -32,8 +33,8 @@ export default function setupMockServer() {
           fastDelivery: faker.random.boolean(),
           ratings: faker.random.arrayElement([1, 2, 3, 4, 5]),
           offer: faker.random.arrayElement([
-            "Save 50",
-            "70% bonanza",
+            "Flat 50% off",
+            "Save upto 70%",
             "Republic Day Sale"
           ]),
           idealFor: faker.random.arrayElement([

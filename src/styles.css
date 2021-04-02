@@ -14,14 +14,8 @@
   justify-content: space-between;
 }
 
-.product-card {
-  padding: 1rem;
-  margin: 1rem 1rem;
-  display: flex;
-  flex-direction: column;
+.product-card-home:hover {
   border: 3px solid black;
-  margin: 1rem;
-  width: 200px;
   box-shadow: black 5px 5px 10px;
 }
 
@@ -38,17 +32,7 @@
   font-weight: bolder;
   padding: 1rem;
   border: none;
-}
-
-.thumbnail {
-  padding: 0.5rem 0.5rem;
-  position: relative;
-}
-
-.product-card .x {
-  position: absolute;
-  top: 0px;
-  right: 0px;
+  cursor: pointer;
 }
 
 .top-btns {
