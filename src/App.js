@@ -1,13 +1,16 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./styles.css";
 import { useTheme } from "./Theme-context";
 import { useCart } from "./Cart-context";
 import { Cart } from "./Cart";
+import { Wishlist } from "./Wishlist";
+import { useWishlist } from "./Wishlist-context";
 
 function NavBar() {
   const [route, setRoute] = useState("products");
   const { itemsInCart } = useCart();
+  const { itemsInWishlist } = useWishlist();
   return (
     <>
       <nav>
@@ -19,7 +22,8 @@ function NavBar() {
 
           <li class="navigation-content" onClick={() => setRoute("wishlist")}>
             {" "}
-            Wishlist
+            Wishlist{" "}
+            {itemsInWishlist.length === 0 ? "" : itemsInWishlist.length}
           </li>
 
           <li class="navigation-content" onClick={() => setRoute("cart")}>
@@ -36,11 +40,19 @@ function NavBar() {
   );
 }
 
+// function Toast() {
+
+//   return(
+//     <div style={{position: "fixed", bottom: "5px", right: "50%", visibility: "hidden"}} class="normal-alert"> Added to Wishlist </div>
+//   )
+// }
+
 function ProductsListing() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState(false);
-  const [wish, setWish] = useState(false);
+  const [wishlist, setWishlist] = useState(false);
   const { setItemsInCart } = useCart();
+  const { setItemsInWishlist } = useWishlist();
 
   useEffect(() => {
     (async function () {
@@ -57,94 +69,66 @@ function ProductsListing() {
 
   return (
     <>
+      {/* {wishlist ? <Toast /> : null} */}
       <div
         className="ProductListing"
         style={{ display: "flex", flexWrap: "wrap", margin: "3rem" }}
       >
-        {products.map(
-          ({
-            id,
-            name,
-            image,
-            price,
-            productName,
-            level,
-            inStock,
-            offer,
-            fastDelivery
-          }) => (
-            <div
-              key={id}
-              className="product-card-home"
-              style={{
-                padding: "1rem",
-                margin: "1rem 1rem",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                border: "none",
-                width: "200px",
-                opacity: `${inStock ? 1 : 0.5}`
-              }}
-            >
-              <div className="thumbnail" style={{ padding: "0.5rem 0.5rem" }}>
-                <img
-                  src={image}
-                  width="180px"
-                  height="220px"
-                  alt={productName}
-                />
-                <button> {cart ? "Go to ❤" : "Move to ❤"}</button>
-              </div>
-              <div className="product-content">
-                <div style={{ fontSize: "1.5rem", fontWeight: "bolder" }}>
-                  {name}
-                </div>
-                <div>Rs. {price}</div>
-                {inStock && <div style={{ color: "green" }}> In Stock </div>}
-                {!inStock && <div style={{ color: "red" }}> Out of Stock </div>}
-                <div style={{ fontWeight: "bolder", color: "green" }}>
-                  {offer}
-                </div>
-                {fastDelivery ? (
-                  <div> Fast Delivery </div>
-                ) : (
-                  <div> 3 days minimum </div>
-                )}
-                <button
-                  disabled={inStock ? false : true}
-                  className="addToCart"
-                  onClick={() =>
-                    setItemsInCart((items) => [
-                      ...items,
-                      {
-                        id,
-                        name,
-                        image,
-                        price,
-                        level,
-                        productName,
-                        inStock,
-                        offer,
-                        fastDelivery
-                      }
-                    ])
-                  }
-                >
-                  {" "}
-                  Add to Cart{" "}
-                </button>
-              </div>
+        {products.map((item) => (
+          <div
+            key={item.id}
+            className="product-card-home"
+            style={{
+              opacity: `${item.inStock ? 1 : 0.7}`
+            }}
+          >
+            <div className="thumbnail" style={{ padding: "0.5rem 0.5rem" }}>
+              <img
+                src={item.image}
+                width="180px"
+                height="220px"
+                alt={item.productName}
+              />
+              <button
+                className="primary-btn"
+                key={item.id}
+                onClick={() => setItemsInWishlist((items) => [...items, item])}
+              >
+                {" "}
+                {cart ? "Go to ❤" : "Move to ❤"}
+              </button>
             </div>
-          )
-        )}
+            <div className="product-content">
+              <div style={{ fontSize: "1.5rem", fontWeight: "bolder" }}>
+                {item.name}
+              </div>
+              <div>Rs. {item.price}</div>
+              {item.inStock && <div style={{ color: "green" }}> In Stock </div>}
+              {!item.inStock && (
+                <div style={{ color: "red" }}> Out of Stock </div>
+              )}
+              <div style={{ fontWeight: "bolder", color: "green" }}>
+                {item.offer}
+              </div>
+              {item.fastDelivery ? (
+                <div> Fast Delivery </div>
+              ) : (
+                <div> 3 days minimum </div>
+              )}
+              <button
+                disabled={item.inStock ? false : true}
+                className="primary-btn"
+                onClick={() => setItemsInCart((items) => [...items, item])}
+              >
+                {" "}
+                Add to Cart{" "}
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
-}
-
-function Wishlist() {
-  return <h1> Wishlist </h1>;
 }
 
 // function ShowItems({
